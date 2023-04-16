@@ -4,6 +4,7 @@ using System.Linq;
 using lesson_1.Interfaces;
 using System.Text.Json;
 
+
 namespace lesson_1.Services
 {
 
@@ -33,9 +34,9 @@ namespace lesson_1.Services
             File.WriteAllText(filePath, JsonSerializer.Serialize(tasks));
         }
 
-        public List<MyTask> GetAll()
+        public IEnumerable<MyTask> GetAll(int id)
         {
-            return tasks;
+           return tasks.Where((task) => task.UserId==id);
         }
 
         public MyTask Get(int id)
@@ -43,8 +44,9 @@ namespace lesson_1.Services
             return tasks.FirstOrDefault(t => t.Id == id);
         }
 
-        public void Add(MyTask task)
+        public void Add(MyTask task,int id)
         {
+              task.UserId=id;
               task.Id=tasks.Max(t=> t.Id)+1;
               tasks.Add(task);
               saveToFile();

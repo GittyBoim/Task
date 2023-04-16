@@ -2,20 +2,26 @@ const uri = '/Tasks';
 let tasks = [];
 
 function getItems() {
-    fetch(uri)
+
+   /* serverCalls("",'GET',null)
+    .then(data=> _displayItems(data));*/
+    
+    fetch(uri,{
+        headers:{
+            Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
+        }
+    })
         .then(response => response.json())
         .then(data => _displayItems(data))
         .catch(error => console.error('Unable to get items.', error));
 }
 
 function addItem() {
-    const addIdTextbox = document.getElementById('add-id');
     const addDescriptionTextbox = document.getElementById('add-description');
     const addisDoneChekbox = document.getElementById('add-isDone');
 
 
     const item = {
-        Id: addIdTextbox.value.trim(),
         Description: addDescriptionTextbox.value.trim(),
         IsDone: addisDoneChekbox.checked
     };
@@ -23,14 +29,14 @@ function addItem() {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
             },
             body: JSON.stringify(item)
         })
         .then(response => response.json())
         .then(() => {
             getItems();
-            addIdTextbox.value = '';
             addDescriptionTextbox.value = '';
             addisDoneChekbox.value = '';
         })
@@ -39,7 +45,10 @@ function addItem() {
 
 function deleteItem(id) {
     fetch(`${uri}/${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers:{
+                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
+            }
         })
         .then(() => getItems())
         .catch(error => console.error('Unable to delete item.', error));
@@ -56,22 +65,22 @@ function displayEditForm(id) {
 
 function updateItem() {
     const itemId = document.getElementById('edit-id').value;
+
     const item = {
         Id: parseInt(itemId, 10),
         Description: document.getElementById('edit-description').value.trim(),
-        IsDone: document.getElementById('edit-isDone').value.trim()
+        IsDone: document.getElementById('edit-isDone').checked
     };
-    
-
     fetch(`${uri}/${itemId}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
             },
             body: JSON.stringify(item)
         })
-        .then( (d) =>console.log(d), getItems())
+        .then( () => getItems())
         .catch(error => console.error('Unable to update item.', error));
 
     closeInput();
@@ -126,5 +135,25 @@ function _displayItems(data) {
         td4.appendChild(deleteButton);
     });
 
+    
     tasks = data;
 }
+
+/*async function serverCalls(url,method,body){
+    
+    const token="Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1);
+    var requestOptions = {
+    method: method,
+    headers: {
+        "Authorization":token,
+        "Content-Type":"application/json"
+    },
+    body:body,
+    redirect: 'follow'
+    };
+
+    return fetch(uri+url, requestOptions)
+    .then(response => response.json())
+    .then(result => result)
+    .catch(error => console.log('error', error));
+}*/

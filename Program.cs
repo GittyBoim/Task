@@ -23,9 +23,6 @@ var builder = WebApplication.CreateBuilder(args);
             cfg.AddPolicy("User", policy => policy.RequireClaim("type", "User"));
         });
 
-
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.addTasks();
 builder.Services.addUsers();

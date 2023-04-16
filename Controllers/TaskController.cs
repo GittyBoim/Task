@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using lesson_1.Models;
 using lesson_1.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace lesson_1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-
+    [Authorize]
     public class TasksController : ControllerBase
     {
         private ITask task;
@@ -22,11 +23,11 @@ namespace lesson_1.Controllers
             this.task = task;
         }
 
-
-        [HttpGet]
+        [HttpGet] 
         public IEnumerable<MyTask> Get()
         {
-            return this.task.GetAll();
+            var id=int.Parse(User.Claims.FirstOrDefault(c=> c.Type =="Id").Value);
+            return this.task.GetAll(id);
         }
 
         [HttpGet("{id}")]
@@ -41,7 +42,8 @@ namespace lesson_1.Controllers
         [HttpPost]
         public ActionResult Post(MyTask task)
         {
-            this.task.Add(task);
+            var id=int.Parse(User.Claims.FirstOrDefault(c=> c.Type =="Id").Value);
+            this.task.Add(task,id);
             return CreatedAtAction(nameof(Post), new { id = task.Id }, task);
         }
 

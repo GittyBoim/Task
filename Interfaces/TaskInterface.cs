@@ -6,11 +6,11 @@ namespace lesson_1.Interfaces
 
     public interface ITask
     {
-        public List<MyTask> GetAll();
+        public IEnumerable<MyTask> GetAll(int id);
 
         public MyTask Get(int id);
 
-        public void Add(MyTask task);
+        public void Add(MyTask task,int id);
 
         public bool Update(int id, MyTask newTask);
 

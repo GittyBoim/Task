@@ -31,8 +31,6 @@ namespace lesson_1.Controllers
         [Route("[action]")]
         public ActionResult<String> Login([FromBody] User user)
         {
-
-            Console.WriteLine("enter");
             user=this.user.Login(user.UserName,user.Password);
             if (user == null)
             {
