@@ -10,7 +10,7 @@ namespace lesson_1.Interfaces
 
         public MyTask Get(int id);
 
-        public void Add(MyTask task,int id);
+        public void Add(MyTask task, int id);
 
         public bool Update(int id, MyTask newTask);
 

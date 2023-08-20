@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using lesson_1.Models;
 using lesson_1.Interfaces;
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using lesson_1.Services;
 
@@ -17,12 +11,12 @@ namespace lesson_1.Controllers
     [ApiController]
     [Route("[controller]")]
 
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private IUser user;
 
 
-        public UsersController(IUser user)
+        public UserController(IUser user)
         {
             this.user = user;
         }
@@ -31,7 +25,7 @@ namespace lesson_1.Controllers
         [Route("[action]")]
         public ActionResult<String> Login([FromBody] User user)
         {
-            user=this.user.Login(user.UserName,user.Password);
+            user = this.user.Login(user.UserName, user.Password);
             if (user == null)
             {
                 return Unauthorized();
@@ -54,16 +48,14 @@ namespace lesson_1.Controllers
         [Authorize(Policy = "Admin")]
         public IEnumerable<User> Get()
         {
-           var clm=User.Claims.FirstOrDefault(c=> c.Type =="Id");
-           Console.WriteLine(clm.Value);
             return this.user.GetAll();
         }
 
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id)
         {
-            var u=this.user.Get(id);
-            if(u == null)
+            var u = this.user.Get(id);
+            if (u == null)
                 return NotFound();
             return u;
         }
@@ -78,9 +70,9 @@ namespace lesson_1.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Policy = "Admin")]
-        public ActionResult Put(int id,User user)
+        public ActionResult Put(int id, User user)
         {
-            if (!this.user.Update(id,user))
+            if (!this.user.Update(id, user))
                 return BadRequest();
             return NoContent();
         }
@@ -89,9 +81,9 @@ namespace lesson_1.Controllers
         [Authorize(Policy = "Admin")]
         public ActionResult Delete(int id)
         {
-            if(!this.user.Delete(id))
+            if (!this.user.Delete(id))
                 return NotFound();
-            return NoContent(); 
+            return NoContent();
         }
     }
 }

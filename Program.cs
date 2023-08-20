@@ -1,8 +1,8 @@
 using lesson_1.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using lesson_1.Services;
 using Microsoft.OpenApi.Models;
+using lesson_1.Middleware;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +26,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.addTasks();
 builder.Services.addUsers();
+builder.Services.addLog();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -50,6 +51,7 @@ builder.Services.AddSwaggerGen(c =>
             });
 
 var app = builder.Build();
+app.UseLogMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

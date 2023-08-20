@@ -11,7 +11,7 @@ namespace lesson_1.Services
     {
 
         List<User> users { get; }
-        private IWebHostEnvironment  webHost;
+        private IWebHostEnvironment webHost;
         private string filePath;
 
         public UserService(IWebHostEnvironment webHost)
@@ -45,31 +45,31 @@ namespace lesson_1.Services
 
         public void Add(User user)
         {
-              user.Id=users.Max(u=> u.Id)+1;
-              users.Add(user);
-              saveToFile();
+            user.Id = users.Max(u => u.Id) + 1;
+            users.Add(user);
+            saveToFile();
         }
 
         public bool Update(int id, User newUser)
         {
-            if(newUser.Id!=id)
+            if (newUser.Id != id)
                 return false;
-                 var u=users.FirstOrDefault(user=> user.Id==id);
-            if(u==null)
+            var u = users.FirstOrDefault(user => user.Id == id);
+            if (u == null)
                 return false;
-            u.Id=newUser.Id;
-            u.UserName=newUser.UserName;
-            u.Password=newUser.Password;
+            u.Id = newUser.Id;
+            u.UserName = newUser.UserName;
+            u.Password = newUser.Password;
 
-            u.Classification=newUser.Classification;
+            u.Classification = newUser.Classification;
             saveToFile();
             return true;
         }
 
         public bool Delete(int id)
-        { 
-            var u=users.FirstOrDefault(u => u.Id == id);
-            if(u==null)
+        {
+            var u = users.FirstOrDefault(u => u.Id == id);
+            if (u == null)
                 return false;
             users.Remove(u);
             saveToFile();
@@ -78,7 +78,7 @@ namespace lesson_1.Services
 
         public User Login(string userName, string password)
         {
-            return users.FirstOrDefault(u=> u.UserName == userName && u.Password == password);
+            return users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
         }
     }
 }

@@ -15,6 +15,7 @@ document.querySelector("#userName").addEventListener("focus", function (e) {
     }
   });
 });
+
 document.querySelector("#password").addEventListener("focus", function (e) {
   if (current) current.pause();
   current = anime({
@@ -31,6 +32,7 @@ document.querySelector("#password").addEventListener("focus", function (e) {
     }
   });
 });
+
 document.querySelector("#submit").addEventListener("focus", function (e) {
   if (current) current.pause();
   current = anime({

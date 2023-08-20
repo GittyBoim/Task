@@ -1,14 +1,1 @@
-[
-    {
-        "Id": 1,
-        "UserName": "admin",
-        "Password": "1234",
-        "Classification": "Admin"
-    },
-    {
-        "Id": 3,
-        "UserName": "gitty",
-        "Password": "5220",
-        "Classification": "User"
-    }
-]
+[{"Id":5,"UserName":"Gitty Boim","Password":"0556705220","Classification":"Admin"},{"Id":6,"UserName":"gitty","Password":"g0556705220","Classification":"Admin"},{"Id":7,"UserName":"Avigail  Boim","Password":"9742175","Classification":"User"},{"Id":9,"UserName":"Gitty","Password":"5220","Classification":"Admin"},{"Id":10,"UserName":"gitty boim","Password":"5220","Classification":"User"}]

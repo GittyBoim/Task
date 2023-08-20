@@ -1,14 +1,14 @@
-const uri = '/Tasks';
+const uri = '/Task';
 let tasks = [];
 
 function getItems() {
 
-   /* serverCalls("",'GET',null)
-    .then(data=> _displayItems(data));*/
-    
-    fetch(uri,{
-        headers:{
-            Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
+    /* serverCalls("",'GET',null)
+     .then(data=> _displayItems(data));*/
+
+    fetch(uri, {
+        headers: {
+            Authorization: "Bearer " + sessionStorage.getItem("token").substring(1).slice(0, -1)
         }
     })
         .then(response => response.json())
@@ -26,37 +26,37 @@ function addItem() {
         IsDone: addisDoneChekbox.checked
     };
     fetch(uri, {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
-            },
-            body: JSON.stringify(item)
-        })
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: "Bearer " + sessionStorage.getItem("token").substring(1).slice(0, -1)
+        },
+        body: JSON.stringify(item)
+    })
         .then(response => response.json())
         .then(() => {
             getItems();
             addDescriptionTextbox.value = '';
-            addisDoneChekbox.value = '';
+            addisDoneChekbox.checked = false;
         })
         .catch(error => console.error('Unable to add item.', error));
 }
 
 function deleteItem(id) {
     fetch(`${uri}/${id}`, {
-            method: 'DELETE',
-            headers:{
-                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
-            }
-        })
+        method: 'DELETE',
+        headers: {
+            Authorization: "Bearer " + sessionStorage.getItem("token").substring(1).slice(0, -1)
+        }
+    })
         .then(() => getItems())
         .catch(error => console.error('Unable to delete item.', error));
 }
 
 function displayEditForm(id) {
     const item = tasks.find(item => item.id === id);
-    
+
     document.getElementById('edit-id').value = item.id;
     document.getElementById('edit-description').value = item.description;
     document.getElementById('edit-isDone').checked = item.isDone;
@@ -72,15 +72,15 @@ function updateItem() {
         IsDone: document.getElementById('edit-isDone').checked
     };
     fetch(`${uri}/${itemId}`, {
-            method: 'PUT',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                Authorization:"Bearer "+sessionStorage.getItem("token").substring(1).slice(0,-1)
-            },
-            body: JSON.stringify(item)
-        })
-        .then( () => getItems())
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: "Bearer " + sessionStorage.getItem("token").substring(1).slice(0, -1)
+        },
+        body: JSON.stringify(item)
+    })
+        .then(() => getItems())
         .catch(error => console.error('Unable to update item.', error));
 
     closeInput();
@@ -135,7 +135,7 @@ function _displayItems(data) {
         td4.appendChild(deleteButton);
     });
 
-    
+
     tasks = data;
 }
 

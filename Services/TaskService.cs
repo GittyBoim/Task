@@ -12,7 +12,7 @@ namespace lesson_1.Services
     {
 
         List<MyTask> tasks { get; }
-        private IWebHostEnvironment  webHost;
+        private IWebHostEnvironment webHost;
         private string filePath;
 
         public TaskService(IWebHostEnvironment webHost)
@@ -36,7 +36,7 @@ namespace lesson_1.Services
 
         public IEnumerable<MyTask> GetAll(int id)
         {
-           return tasks.Where((task) => task.UserId==id);
+            return tasks.Where((task) => task.UserId == id);
         }
 
         public MyTask Get(int id)
@@ -44,32 +44,32 @@ namespace lesson_1.Services
             return tasks.FirstOrDefault(t => t.Id == id);
         }
 
-        public void Add(MyTask task,int id)
+        public void Add(MyTask task, int id)
         {
-              task.UserId=id;
-              task.Id=tasks.Max(t=> t.Id)+1;
-              tasks.Add(task);
-              saveToFile();
+            task.UserId = id;
+            task.Id = tasks.Max(t => t.Id) + 1;
+            tasks.Add(task);
+            saveToFile();
         }
 
         public bool Update(int id, MyTask newTask)
         {
-            if(newTask.Id!=id)
+            if (newTask.Id != id)
                 return false;
-                 var t=tasks.FirstOrDefault(task=> task.Id==id);
-            if(t==null)
+            var t = tasks.FirstOrDefault(task => task.Id == id);
+            if (t == null)
                 return false;
-            t.Id=newTask.Id;
-            t.Description=newTask.Description;
-            t.IsDone=newTask.IsDone;
+            t.Id = newTask.Id;
+            t.Description = newTask.Description;
+            t.IsDone = newTask.IsDone;
             saveToFile();
             return true;
         }
 
         public bool Delete(int id)
-        { 
-            var t=tasks.FirstOrDefault(t => t.Id == id);
-            if(t==null)
+        {
+            var t = tasks.FirstOrDefault(t => t.Id == id);
+            if (t == null)
                 return false;
             tasks.Remove(t);
             saveToFile();

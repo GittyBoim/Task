@@ -29,7 +29,7 @@ namespace lesson_1.Services
                 ValidIssuer = issuer,
                 ValidAudience = issuer,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SXkSqsKyNUyvGbnHs7ke2NCq8zQzNLW7mPmHbnZZ")),
-                ClockSkew = TimeSpan.Zero // remove delay of token when expires
+                ClockSkew = TimeSpan.Zero
             };
 
         public static string WriteToken(SecurityToken token) =>
