@@ -12,7 +12,6 @@ namespace lesson_1.Controllers
     {
         private ITask task;
 
-
         public TaskController(ITask task)
         {
             this.task = task;
