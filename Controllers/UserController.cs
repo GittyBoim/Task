@@ -15,7 +15,6 @@ namespace lesson_1.Controllers
     {
         private IUser user;
 
-
         public UserController(IUser user)
         {
             this.user = user;
@@ -42,7 +41,6 @@ namespace lesson_1.Controllers
 
             return new OkObjectResult(TokenService.WriteToken(token));
         }
-
 
         [HttpGet]
         [Authorize(Policy = "Admin")]
